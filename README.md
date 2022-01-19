@@ -1,0 +1,1 @@
+This is a project to merge three 2D images into one 3D model using matplotlib

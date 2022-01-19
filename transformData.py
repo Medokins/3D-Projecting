@@ -1,6 +1,8 @@
 from PIL import Image
 import numpy as np
 
+name = "stairs"
+
 def convertToBinary(name):
     im = Image.open(f"Images/{name}.png")
     imArr = np.zeros(im.size)

@@ -1,8 +1,6 @@
 from PIL import Image
 import numpy as np
 
-name = "stairs"
-
 def convertToBinary(name):
     im = Image.open(f"Images/{name}.png")
     imArr = np.zeros(im.size)
@@ -11,7 +9,7 @@ def convertToBinary(name):
         for y in range(im.size[1]):
             coordinate = y, x
             if im.getpixel(coordinate) == (0, 0, 0):
-                imArr[x][y] = 1
+                imArr[y][x] = 1
             else:
-                imArr[x][y] = 0
+                imArr[y][x] = 0
     return imArr

@@ -13,3 +13,15 @@ def convertToBinary(name):
             else:
                 imArr[y][x] = 0
     return imArr
+
+def firstSquareVerticalCheck(number):
+    if number < 2:
+        return 1
+    if number >= 2:
+        return 0
+
+def firstSquareHorizontalCheck(number):
+    if number == 1 or number == 3:
+        return 1
+    if number == 0 or number == 2:
+        return 0

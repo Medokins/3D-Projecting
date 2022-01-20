@@ -1,8 +1,6 @@
-from sqlite3 import SQLITE_ALTER_TABLE
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.decomposition import SparsePCA
-from transformData import convertToBinary
+from transformData import convertToBinary, firstSquareHorizontalCheck
 
 imgArray = convertToBinary("triangles")
 
@@ -60,30 +58,26 @@ for square in range(4):
             if square < 2:
                 if imgArray[int(x + (spacing + start)/2 + square*spacing), int(y + (spacing + start)/2)] != 0:
                     for i in range(3):
-                        point = [i]
-                        print(point)
+                        point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing) + 1, 2)]
                         if point not in allpoints:
                             allpoints.append(point)
+
             if square >= 2:
                 if imgArray[int(x + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
                     for i in range(3):
-                            point = [i]
-                            print(point)
-                            if point not in allpoints:
-                                allpoints.append(point)
+                        point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing), 2)]
+                        if point not in allpoints:
+                            allpoints.append(point)
 
+# 33 43 => (0, 0.4, 1.6), (0, 0.6, 1.6)
+# 34 44 => (0, 0.4, 1.4), (0, 0.6, 1.4)
+# 83 93 => (0, 1.4, 1.6). (0, 1.6, 1.6)
+# 84 94 => (0, 1.4, 1.4). (0, 1.6, 1.4)
 
-# 33 43 => (0, 0.2, 1.6), (0, 0.4, 1.6)
-# 34 44 => (0, 0.2, 1.4), (0, 0.4, 1.4)
-
-# 83 93 => (0, 1.2, 1.6). (0, 1.4, 1.6)
-# 84 94 => (0, 1.2, 1.4). (0, 1.4, 1.4)
-
-# 38 48
-# 39 49
-
-# 88 98
-# 89 99
+# 38 48 => (0, 0.4, 0.6), (0, 0.6, 0.6)
+# 39 49 => (0, 0.4, 0.4), (0, 0.6, 0.4)
+# 88 98 => (0, 1.4, 0.6), (0, 1.6, 0.6)
+# 89 99 => (0, 1.4, 0.4), (0, 1.6, 0.4)
 
 X = []
 Y = []
@@ -94,5 +88,5 @@ for point in (allpoints):
     Y.append(point[1])
     Z.append(point[2])
 
-# ax.scatter(X, Y, Z, c = 'black')
-# plt.show()
+ax.scatter(X, Y, Z, c = 'black')
+plt.show()

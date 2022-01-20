@@ -1,5 +1,7 @@
+from sqlite3 import SQLITE_ALTER_TABLE
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.decomposition import SparsePCA
 from transformData import convertToBinary
 
 imgArray = convertToBinary("triangles")
@@ -31,7 +33,6 @@ for x in range(3):
                 if point in allpoints:
                     allpoints.remove(point)
 
-
 #second square, side view:
 for x in range(3):
     for y in range(3):
@@ -41,8 +42,6 @@ for x in range(3):
                 if point in allpoints:
                     allpoints.remove(point)
                     
-
-
 #third square, view from above:
 for x in range(3):
     for y in range(3):
@@ -51,6 +50,40 @@ for x in range(3):
                 point = [x, y-2, i]
                 if point in allpoints:               
                     allpoints.remove(point)
+
+#now i need to check for diagonal lines
+
+#first sqaure, the front view
+for square in range(4):
+    for x in range(2):
+        for y in range(2):
+            if square < 2:
+                if imgArray[int(x + (spacing + start)/2 + square*spacing), int(y + (spacing + start)/2)] != 0:
+                    for i in range(3):
+                        point = [i]
+                        print(point)
+                        if point not in allpoints:
+                            allpoints.append(point)
+            if square >= 2:
+                if imgArray[int(x + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
+                    for i in range(3):
+                            point = [i]
+                            print(point)
+                            if point not in allpoints:
+                                allpoints.append(point)
+
+
+# 33 43 => (0, 0.2, 1.6), (0, 0.4, 1.6)
+# 34 44 => (0, 0.2, 1.4), (0, 0.4, 1.4)
+
+# 83 93 => (0, 1.2, 1.6). (0, 1.4, 1.6)
+# 84 94 => (0, 1.2, 1.4). (0, 1.4, 1.4)
+
+# 38 48
+# 39 49
+
+# 88 98
+# 89 99
 
 X = []
 Y = []
@@ -61,5 +94,5 @@ for point in (allpoints):
     Y.append(point[1])
     Z.append(point[2])
 
-ax.scatter(X, Y, Z, c = 'black')
-plt.show()
+# ax.scatter(X, Y, Z, c = 'black')
+# plt.show()

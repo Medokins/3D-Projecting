@@ -22,6 +22,25 @@ for x in range(3):
 start = 1 #hard coding this for now, will change once i have working model
 spacing = 5 #hard coding this for now, will change once i have working model
 
+#first sqaure, the front view
+for square in range(4):
+    for x in range(2):
+        for y in range(2):
+            if square < 2:
+                if imgArray[int(x + (spacing + start)/2 + square*spacing), int(y + (spacing + start)/2)] != 0:
+                    for i in range(3):
+                        point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing) + 1, 2)]
+                        if point not in allpoints:
+                            allpoints.append(point)
+
+            if square >= 2:
+                if imgArray[int(x + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
+                    for i in range(3):
+                        point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing), 2)]
+                        if point not in allpoints:
+                            allpoints.append(point)
+
+#now i need to squares, the reason I'm doing it in this order is that it's easier to detect diagonal lines in squares
 #first square, the front view
 for x in range(3):
     for y in range(3):
@@ -48,26 +67,6 @@ for x in range(3):
                 point = [x, y-2, i]
                 if point in allpoints:               
                     allpoints.remove(point)
-
-#now i need to check for diagonal lines
-
-#first sqaure, the front view
-for square in range(4):
-    for x in range(2):
-        for y in range(2):
-            if square < 2:
-                if imgArray[int(x + (spacing + start)/2 + square*spacing), int(y + (spacing + start)/2)] != 0:
-                    for i in range(3):
-                        point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing) + 1, 2)]
-                        if point not in allpoints:
-                            allpoints.append(point)
-
-            if square >= 2:
-                if imgArray[int(x + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
-                    for i in range(3):
-                        point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing), 2)]
-                        if point not in allpoints:
-                            allpoints.append(point)
 
 # 33 43 => (0, 0.4, 1.6), (0, 0.6, 1.6)
 # 34 44 => (0, 0.4, 1.4), (0, 0.6, 1.4)

@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from torch import arange
-from transformData import convertToBinary, firstSquareHorizontalCheck, secondSquareHorizontalCheck
+from transformData import convertToBinary, firstSquareHorizontalCheck, secondSquareHorizontalCheck, thirdSquareHorizontalCheck
 
 imgArray = convertToBinary("triangles")
 
@@ -50,7 +49,6 @@ for square in range(4):
                         point = [round(1 - (x+2)*(1/spacing) + secondSquareHorizontalCheck(square), 2),0, round((3-y)*(1/spacing) + 1, 2)]
                         if point not in allpoints:
                             allpoints.append(point)
-
             if square >= 2:
                 if imgArray[int(x + spacing*2 + 2*start + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
                     for i in range(3):
@@ -58,6 +56,22 @@ for square in range(4):
                         if point not in allpoints:
                             allpoints.append(point)
 
+#third square, view from above
+for square in range(4):
+    for x in range(2):
+        for y in range(2):
+            if square < 2:
+                if imgArray[int(y + (spacing + start)/2), int(x + spacing*2 + 2*start + (spacing + start)/2 + square*spacing)] != 0:
+                    for i in range(3):
+                        point = [round(1 - (x+2)*(1/spacing) + secondSquareHorizontalCheck(square), 2),round(1 - (3-y)*(1/spacing), 2),i]
+                        if point not in allpoints:
+                            allpoints.append(point)
+            if square >= 2:
+                if imgArray[int((y + (spacing + start)/2) + spacing), int(x + spacing*2 + 2*start + (spacing + start)/2 + (square-2)*spacing)] != 0:
+                    for i in range(3):
+                        point = [round(1 - (x+2)*(1/spacing) + thirdSquareHorizontalCheck(square), 2), round(1 - (3-y)*(1/spacing), 2) + 1, i]
+                        if point not in allpoints:
+                            allpoints.append(point)
 
 
 #now i need to check squares, the reason I'm doing it in this order is that it's easier to detect diagonal lines in squares and remove them

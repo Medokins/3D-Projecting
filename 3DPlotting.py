@@ -3,13 +3,21 @@ import matplotlib.pyplot as plt
 from transformData import convertToBinary, firstSquareHorizontalCheck, secondSquareHorizontalCheck, thirdSquareHorizontalCheck
 
 imgArray = convertToBinary("triangles")
+color = "black"
+modelOnly = False
 
 figure = plt.figure(facecolor='w')
 ax = plt.axes(projection ='3d')
 ax.invert_xaxis()
+
+if modelOnly:
+    plt.axis('off')
+    plt.grid(b=None)
+
 ax.set_xlabel('X', linespacing=3.2)
 ax.set_ylabel('Y', linespacing=3.2)
 ax.set_zlabel('Z', linespacing=3.2)
+
 
 allpoints = []
 
@@ -114,5 +122,5 @@ for point in (allpoints):
     Y.append(point[1])
     Z.append(point[2])
 
-ax.scatter(X, Y, Z, c = 'black')
+ax.scatter(X, Y, Z, c = color)
 plt.show()

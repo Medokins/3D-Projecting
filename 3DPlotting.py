@@ -105,9 +105,9 @@ for x in range(3):
 for x in range(3):
     for y in range(3):
         if imgArray[x * spacing + start,y*spacing + 2*spacing + 3*start] == 0:
-            for i in np.arange(0, 3.0, 0.2):
-                for xoffset in np.arange(0, 1.0, 0.2):
-                    for yoffset in np.arange(0, 1.0, 0.2):
+            for i in np.arange(0, 3.0, round(1/spacing, 2)):
+                for xoffset in np.arange(0, 1.0, round(1/spacing, 2)):
+                    for yoffset in np.arange(0, 1.0, 1/spacing):
                         point = [x+round(xoffset, 2), y-2 + round(yoffset, 2), round(i, 2)]
                         if point in allpoints:
                             allpoints.remove(point)

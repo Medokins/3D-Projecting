@@ -25,3 +25,9 @@ def secondSquareHorizontalCheck(number):
         return 1
     if number == 1:
         return 0
+
+def thirdSquareHorizontalCheck(number):
+    if number == 0 or number == 1 or number == 2:
+        return 1
+    if number == 3:
+        return 0

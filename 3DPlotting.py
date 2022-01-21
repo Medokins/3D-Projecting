@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from transformData import convertToBinary, firstSquareHorizontalCheck
+from torch import arange
+from transformData import convertToBinary, firstSquareHorizontalCheck, secondSquareHorizontalCheck
 
 imgArray = convertToBinary("triangles")
 
@@ -22,7 +23,7 @@ for x in range(3):
 start = 1 #hard coding this for now, will change once i have working model
 spacing = 5 #hard coding this for now, will change once i have working model
 
-#first sqaure, the front view
+#first sqaure, front view
 for square in range(4):
     for x in range(2):
         for y in range(2):
@@ -32,7 +33,6 @@ for square in range(4):
                         point = [i, round((x+2)*(1/spacing) + firstSquareHorizontalCheck(square), 2), round((3-y)*(1/spacing) + 1, 2)]
                         if point not in allpoints:
                             allpoints.append(point)
-
             if square >= 2:
                 if imgArray[int(x + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
                     for i in range(3):
@@ -40,8 +40,28 @@ for square in range(4):
                         if point not in allpoints:
                             allpoints.append(point)
 
-#now i need to squares, the reason I'm doing it in this order is that it's easier to detect diagonal lines in squares
-#first square, the front view
+#second square, side view
+for square in range(4):
+    for x in range(2):
+        for y in range(2):
+            if square < 2:
+                if imgArray[int(x + spacing*2 + 2*start + (spacing + start)/2 + square*spacing), int(y + (spacing + start)/2)] != 0:
+                    for i in range(3):
+                        point = [round(1 - (x+2)*(1/spacing) + secondSquareHorizontalCheck(square), 2),0, round((3-y)*(1/spacing) + 1, 2)]
+                        if point not in allpoints:
+                            allpoints.append(point)
+
+            if square >= 2:
+                if imgArray[int(x + spacing*2 + 2*start + (spacing + start)/2 + (square-2)*spacing), int(y + (spacing + start)/2) + spacing] != 0:
+                    for i in range(3):
+                        point = [round(1 - (x+2)*(1/spacing) + secondSquareHorizontalCheck(square), 2),i, round((3-y)*(1/spacing), 2)]
+                        if point not in allpoints:
+                            allpoints.append(point)
+
+
+
+#now i need to check squares, the reason I'm doing it in this order is that it's easier to detect diagonal lines in squares and remove them
+#first square, front view
 for x in range(3):
     for y in range(3):
         if imgArray[x * spacing + start,y * spacing + start] == 0:
@@ -63,20 +83,13 @@ for x in range(3):
 for x in range(3):
     for y in range(3):
         if imgArray[x * spacing + start,y*spacing + 2*spacing + 3*start] == 0:
-            for i in range(3):
-                point = [x, y-2, i]
-                if point in allpoints:               
-                    allpoints.remove(point)
+            for i in np.arange(0, 3.0, 0.2):
+                for xoffset in np.arange(0, 1.0, 0.2):
+                    for yoffset in np.arange(0, 1.0, 0.2):
+                        point = [x+round(xoffset, 2), y-2 + round(yoffset, 2), round(i, 2)]
+                        if point in allpoints:
+                            allpoints.remove(point)
 
-# 33 43 => (0, 0.4, 1.6), (0, 0.6, 1.6)
-# 34 44 => (0, 0.4, 1.4), (0, 0.6, 1.4)
-# 83 93 => (0, 1.4, 1.6). (0, 1.6, 1.6)
-# 84 94 => (0, 1.4, 1.4). (0, 1.6, 1.4)
-
-# 38 48 => (0, 0.4, 0.6), (0, 0.6, 0.6)
-# 39 49 => (0, 0.4, 0.4), (0, 0.6, 0.4)
-# 88 98 => (0, 1.4, 0.6), (0, 1.6, 0.6)
-# 89 99 => (0, 1.4, 0.4), (0, 1.6, 0.4)
 
 X = []
 Y = []

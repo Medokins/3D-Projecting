@@ -17,15 +17,13 @@ def convertToBinary(name):
 
 def findNearest(point, allPoints): #connect to at least 2 in the same height if height == 0, 1 or 2
     nearest = []
-    #height = point[2]
-    min = 10
+    adjacent = 1
+    diagonal = round(math.sqrt(2))
 
     for currentPoint in allPoints:
-        distance = math.sqrt(pow(point[0] - currentPoint[0], 2) + pow(point[1] - currentPoint[1], 2) + pow(point[2] - currentPoint[2], 2))
-        if distance <= min:
-            min = distance
-            nearest.append(currentPoint)
-
+        distance = round(math.sqrt(pow(point[0] - currentPoint[0], 2) + pow(point[1] - currentPoint[1], 2) + pow(point[2] - currentPoint[2], 2)), 3)
+        if distance == adjacent or distance <= diagonal:
+            nearest.append([distance, currentPoint])
     return nearest
 
 def firstSquareHorizontalCheck(number):

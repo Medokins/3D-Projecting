@@ -4,7 +4,7 @@ from transformData import *
 
 imgArray = convertToBinary("triangles")
 color = "black"
-modelOnly = False
+modelOnly = True
 
 figure = plt.figure(facecolor='w')
 ax = plt.axes(projection ='3d')
@@ -117,18 +117,19 @@ X = []
 Y = []
 Z = []
 
-# allpoints.remove([1, 1, 2])
+lineSegments = []
 
 for point in allpoints:
     X.append(point[0])
     Y.append(point[1])
     Z.append(point[2])
 
-
 for point in allpoints:
     nearest = findNearest(point, allpoints)
     for i in range(len(nearest)):
         ax.plot([point[0], nearest[i][1][0]], [point[1],nearest[i][1][1]],zs=[point[2],nearest[i][1][2]])
+        lineSegments.append([point[0], nearest[i][1][0], point[1],nearest[i][1][1], point[2],nearest[i][1][2]])
+
 
 if modelOnly:
     plt.show()

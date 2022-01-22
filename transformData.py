@@ -15,16 +15,25 @@ def convertToBinary(name):
                 imArr[y][x] = 0
     return imArr
 
-def findNearest(point, allPoints): #connect to at least 2 in the same height if height == 0, 1 or 2
+def findNearest(point, allPoints):
     nearest = []
     adjacent = 1
-    diagonal = round(math.sqrt(2))
 
     for currentPoint in allPoints:
         distance = round(math.sqrt(pow(point[0] - currentPoint[0], 2) + pow(point[1] - currentPoint[1], 2) + pow(point[2] - currentPoint[2], 2)), 3)
-        if distance == adjacent or distance <= diagonal:
+        if distance <= adjacent:
             nearest.append([distance, currentPoint])
     return nearest
+
+def findParallel(lineSegment, lineSegments): #this is so that program will later fill 2 adjacent parallel lines with plane
+    parallel = []
+    if lineSegment[:2] == [0,1] or lineSegment[:2] == [1,2]: #all lines in X direction
+        pass
+    elif lineSegment[2:4] == [0,1] or lineSegment[2:4] == [1,2]: #all lines in Y direction
+        pass
+    elif lineSegment[4:6] == [0,1] or lineSegment[4:6] == [1, 2]: #all lines in Z direction
+        pass
+    return parallel
 
 def firstSquareHorizontalCheck(number):
     if number == 1 or number == 3:

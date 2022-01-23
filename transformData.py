@@ -26,7 +26,7 @@ def findNearest(point, allPoints):
             nearest.append([distance, currentPoint])
     return nearest
 
-def findParallel(lineSegment, lineSegments): #this is so that program will later fill 2 adjacent parallel lines with plane
+def findParallel(lineSegment, lineSegments, verbose=False): #this is so that program will later fill 2 adjacent parallel lines with plane
     parallel = []
     lineSegments.remove(lineSegment)
 
@@ -45,8 +45,17 @@ def findParallel(lineSegment, lineSegments): #this is so that program will later
                         parallel.append(line)
 
     elif lineSegment[4:6] == [0,1] or lineSegment[4:6] == [1, 2]: #all lines in Z direction
-        pass
-    return parallel
+        for line in lineSegments:
+            if line[4:6] == lineSegment[4:6]: #if in same Z direction and have same start/end
+                if line[0] == line [1] and line[2] == line[3]: #if not diagonal
+                    if line[0] == lineSegment[0] or line[0] == lineSegment[0] + 1 or line[0] == lineSegment[0] - 1: #if they're maximum one away from each other
+                     parallel.append(line)
+    
+    if verbose and len(parallel) == 0:
+        print(f"No parallel lines to {lineSegment}\n")
+        return 0
+    else:
+        return parallel
 
 def firstSquareHorizontalCheck(number):
     if number == 1 or number == 3:

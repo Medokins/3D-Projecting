@@ -131,6 +131,10 @@ for point in allpoints:
         lineSegments.append([point[0], nearest[i][1][0], point[1],nearest[i][1][1], point[2],nearest[i][1][2]])
 
 
+line  = [1, 1, 1,2 , 0,0]
+print(line[2:4])
+print(findParallel(line, lineSegments))
+
 if modelOnly:
     plt.show()
 else:

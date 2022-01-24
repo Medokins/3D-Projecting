@@ -1,5 +1,5 @@
-from re import A
 from PIL import Image
+from matplotlib import image
 import numpy as np
 import math
 
@@ -56,6 +56,11 @@ def findParallel(lineSegment, lineSegments, verbose=False): #this is so that pro
         return 0
     else:
         return parallel
+
+def checkForDiagonals(allPoints, imageArray): #this a fucntion created to remove one point that is not detected by projections itselfs, but by combined effort of diagonals and all projections
+    if [1,1,2] in allPoints:
+        if imageArray[3, 16] == 1 or imageArray[9, 16] == 1 or imageArray[3, 20] == 1 or imageArray[9, 20] == 1:
+            allPoints.remove([1,1,2])
 
 def firstSquareHorizontalCheck(number):
     if number == 1 or number == 3:

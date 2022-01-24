@@ -1,9 +1,8 @@
-from tabnanny import check
 import numpy as np
 import matplotlib.pyplot as plt
 from transformData import *
 
-imgArray = convertToBinary("triangles")
+imgArray = convertToBinary("stairs")
 color = "black"
 modelOnly = True
 

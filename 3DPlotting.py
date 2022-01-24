@@ -1,3 +1,4 @@
+from tabnanny import check
 import numpy as np
 import matplotlib.pyplot as plt
 from transformData import *
@@ -112,12 +113,12 @@ for x in range(3):
                         if point in allpoints:
                             allpoints.remove(point)
 
-
 X = []
 Y = []
 Z = []
 
 lineSegments = []
+checkForDiagonals(allpoints, imgArray)
 
 for point in allpoints:
     X.append(point[0])
@@ -128,10 +129,8 @@ for point in allpoints:
     nearest = findNearest(point, allpoints)
     for i in range(len(nearest)):
         ax.plot([point[0], nearest[i][1][0]], [point[1],nearest[i][1][1]],zs=[point[2],nearest[i][1][2]])
-        lineSegments.append([point[0], nearest[i][1][0], point[1],nearest[i][1][1], point[2],nearest[i][1][2]])
-
-for line in lineSegments:
-    print(findParallel(line, lineSegments))
+        #lineSegments.append([point[0], nearest[i][1][0], point[1],nearest[i][1][1], point[2],nearest[i][1][2]]) #im commenting this out, since plotting many
+        #planes on one graph is much more difficult in matplotlib than i first thoughts
 
 if modelOnly:
     plt.show()
